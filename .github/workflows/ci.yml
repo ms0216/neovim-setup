@@ -1,0 +1,94 @@
+name: TEST
+
+on: [push]
+
+jobs:
+    build-windows:
+        runs-on: windows-latest
+
+        steps:
+            - run: echo "Starting the job..."
+
+            - name: Inspect files before checkout
+              run: ls
+
+            - name: Show current directory before checkout
+              run: pwd
+
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Inspect files after checkout
+              run: ls
+
+            - name: Show current directory after checkout
+              run: pwd
+
+            - name: Install winget
+              uses: Cyberboss/install-winget@v1
+
+            - name: Install wget using Chocolatey
+              run: choco install wget -y
+
+            - name: Run Neovim installation script
+              shell: pwsh
+              run: |
+                  wget https://raw.githubusercontent.com/ms0216/neovim-setup/refs/heads/master/scripts/install-neovim.ps1 | Select-Object -ExpandProperty Content | Invoke-Expression
+
+    build-macos:
+        runs-on: macos-latest
+
+        steps:
+            - run: echo "Starting the job..."
+
+            - name: Inspect files before checkout
+              run: ls
+
+            - name: Show current directory before checkout
+              run: pwd
+
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Inspect files after checkout
+              run: ls
+
+            - name: Show current directory after checkout
+              run: pwd
+
+            - name: Grant execute permission to Neovim installation script
+              run: chmod +x scripts/install-neovim.sh
+
+            - name: Run Neovim installation script
+              shell: bash
+              run: |
+                  wget -O - https://raw.githubusercontent.com/ms0216/neovim-setup/refs/heads/master/scripts/install-neovim.sh | bash
+
+    build-ubuntu:
+        runs-on: ubuntu-latest
+
+        steps:
+            - run: echo "Starting the job..."
+
+            - name: Inspect files before checkout
+              run: ls
+
+            - name: Show current directory before checkout
+              run: pwd
+
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Inspect files after checkout
+              run: ls
+
+            - name: Show current directory after checkout
+              run: pwd
+
+            - name: Grant execute permission to Neovim installation script
+              run: chmod +x scripts/install-neovim.sh
+
+            - name: Run Neovim installation script
+              shell: bash
+              run: |
+                  wget -O - https://raw.githubusercontent.com/ms0216/neovim-setup/refs/heads/master/scripts/install-neovim.sh | bash
